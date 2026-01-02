@@ -1,0 +1,104 @@
+# PBS PRO Job Monitor - Configuration File
+
+# =========================================
+
+# Copy this file to 'config.yaml' and modify for your environment
+
+#
+
+# Configuration search order:
+
+#   1. Path specified via -c/--config command line argument
+
+#   2. ./config.yaml (current directory)
+
+#   3. ~/.pbs_monitor/config.yaml (user home)
+
+#   4. <script_directory>/config.yaml
+
+# -----------------------------------------------------------------------------
+
+# PBS PRO COMMAND PATHS
+
+# -----------------------------------------------------------------------------
+
+# Absolute paths to PBS PRO binaries on the Linux servers
+
+# Find these with: which qsub, which qdel
+
+pbs:
+  qdel_path: "/opt/pbs/bin/qdel"
+  qsub_path: "/opt/pbs/bin/qsub"
+  
+  # Name of the PBS submission script in the job directory
+  # This script must exist in each job directory you want to submit
+  submit_script_name: "qsub.sh"
+
+# -----------------------------------------------------------------------------
+
+# LINUX FILESYSTEM PATHS  
+
+# -----------------------------------------------------------------------------
+
+paths:
+  # Base mount point for user directories
+  # User path will be: {linux_base_path}/{username}
+  linux_base_path: "/mnt/fhgfs"
+  
+  # Remote script name for querying PBS jobs
+  # Must exist at: {linux_base_path}/{username}/{remote_script_name}
+  remote_script_name: "que.py"
+
+# -----------------------------------------------------------------------------
+
+# WINDOWS DRIVE TO SERVER MAPPING
+
+# -----------------------------------------------------------------------------
+
+# Maps Windows network drive letters to Linux server hostnames/IPs
+
+# Example: X:\path\to\job -> server "192.168.1.10" at /mnt/fhgfs/user/path/to/job
+
+drive_mapping:
+  X: "192.168.1.10"
+  Y: "192.168.1.11"
+  Z: "192.168.1.12"
+
+# -----------------------------------------------------------------------------
+
+# SERVER DEFINITIONS
+
+# -----------------------------------------------------------------------------
+
+# List all Linux HPC servers to monitor
+
+# - hostname: Must match an IP/hostname in drive_mapping for path resolution
+
+# - name: Friendly display name shown in the UI
+
+servers:
+  - hostname: "192.168.1.10"
+
+    name: "HPC-Cluster-01"
+  
+  - hostname: "192.168.1.11"
+
+    name: "HPC-Cluster-02"
+  
+  - hostname: "192.168.1.12"
+
+    name: "HPC-Cluster-03"
+
+# -----------------------------------------------------------------------------
+
+# SSH SETTINGS (Optional)
+
+# -----------------------------------------------------------------------------
+
+ssh:
+  # Connection timeout in seconds (default: 10)
+  connection_timeout: 10
+  
+  # Custom SSH key path (optional)
+  # If not specified, looks for ~/.ssh/id_rsa
+  # key_file: "C:/Users/yourusername/.ssh/id_rsa"
